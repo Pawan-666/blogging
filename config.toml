@@ -1,4 +1,4 @@
-# base_url = "pawanchhetri.com.np"
+base_url = "pawanchhetri.com.np"
 title = "Pawan"
 description = "Devops and SRE stuffs"
 default_language = "en"
