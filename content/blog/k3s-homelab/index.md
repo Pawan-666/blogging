@@ -78,7 +78,7 @@ I'm setting up [jellyfin ](https://jellyfin.org/) to host my downloaded movies, 
 
 ❯ cat jellyfin.yml
 
-```
+```yaml
 #Namespace isolation
 #Creating a jellyfin namespace 
 
