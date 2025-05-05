@@ -1,0 +1,126 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta content="width=device-width,initial-scale=1.0" name=viewport><meta content="light dark" name=color-scheme><title>Kubernetes HomeLab | Pawan</title><meta content="Kubernetes HomeLab" property=og:title><meta content="Pawan Chhetri" name=author><meta content=en-US property=og:locale><meta content="k3s on homelab" name=description><meta content="k3s on homelab" property=og:description><link href=blog.pawanchhetri.com.np/blog/k8s-k3s-homelab/ rel=canonical><meta content=blog.pawanchhetri.com.np/blog/k8s-k3s-homelab/ property=og:url><meta content=Pawan property=og:site_name><meta content=article property=og:type><meta content=2024-06-20T00:00:00+00:00 property=article:published_time><meta content=summary name=twitter:card><meta content="Kubernetes HomeLab" property=twitter:title><meta content="k3s on homelab" name=description><title>Kubernetes HomeLab</title><link href=/img/favicon-32x32.png rel=icon sizes=32x32 type=image/png><link href=/img/favicon-16x16.png rel=icon sizes=16x16 type=image/png><link href=/img/apple-touch-icon.png rel=apple-touch-icon sizes=180x180><style>body{--primary-color:#376dd9;--primary-pale-color:#698bcf1c;--inline-code-color:#444;--text-color:#444;--text-pale-color:#545967;--bg-color:#fff;--highlight-mark-color:#5f75b045;--callout-note-color:#3e70d6;--callout-important-color:#7a46cd;--callout-warning-color:#d3822b;--callout-alert-color:#d43f3f;--callout-question-color:#3089b5;--callout-tip-color:#35a06b}body.dark{--primary-color:#689afd;--primary-pale-color:#93acdd1c;--inline-code-color:#d2d2d2;--text-color:#ddd;--text-pale-color:#a0a0a0;--bg-color:#202124;--highlight-mark-color:#5f75b045;--callout-note-color:#698bcf;--callout-important-color:#9374c5;--callout-warning-color:#c99054;--callout-alert-color:#d35757;--callout-question-color:#5091b2;--callout-tip-color:#3ea06f}body{--main-font:"IBMPlexSans",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";--code-font:"IBMPlexMono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;--homepage-max-width:750px;--main-max-width:750px;--avatar-size:175px;--paragraph-font-size:16px;--paragraph-line-height:1.5em;--aside-font-size:16px;--img-border-radius:4px;--inline-code-border-radius:2px}</style><link href=/main.css rel=stylesheet><body class=post><script>if (localStorage.getItem('theme') == 'dark') { document.body.classList.add('dark'); const hl = document.querySelector('link#hl'); if (hl) hl.href = '/hl-dark.css'; }</script><header class=blur><div id=header-wrapper><nav><a href=/>Pawan</a><button aria-label="toggle expand" class=separator id=toggler>::</button><span class="wrap left fold">{</span><a href=/blog>blog</a><span class="wrap-separator fold">,</span><a class=fold href=/projects>projects</a><span class="wrap right fold">} ;</span></nav><div id=btns><a rel="noreferrer noopener" aria-label=GitHub href=https://github.com/Pawan-666 target=_blank> <svg viewbox="0 0 24 24" xmlns=http://www.w3.org/2000/svg><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill=currentColor></path></svg> </a><a rel="noreferrer noopener" aria-label=Twitter href=https://twitter.com/PawanCh09197754 target=_blank> <svg viewbox="0 0 24 24" xmlns=http://www.w3.org/2000/svg><title>Twitter</title><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" fill=currentColor></path></svg> </a><a rel="noreferrer noopener" aria-label=LinkedIn href=https://www.linkedin.com/in/pawan-chhetri-a91821169/ target=_blank> <svg viewbox="0 0 24 24" xmlns=http://www.w3.org/2000/svg><title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill=currentColor></path></svg> </a><button aria-label="theme switch" data-moon-icon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10 7C10 10.866 13.134 14 17 14C18.9584 14 20.729 13.1957 21.9995 11.8995C22 11.933 22 11.9665 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C12.0335 2 12.067 2 12.1005 2.00049C10.8043 3.27098 10 5.04157 10 7ZM4 12C4 16.4183 7.58172 20 12 20C15.0583 20 17.7158 18.2839 19.062 15.7621C18.3945 15.9187 17.7035 16 17 16C12.0294 16 8 11.9706 8 7C8 6.29648 8.08133 5.60547 8.2379 4.938C5.71611 6.28423 4 8.9417 4 12Z" fill="currentColor"></path></svg>' data-sun-icon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604L19.0711 3.51472ZM5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711L5.63604 16.9497ZM23 11V13H20V11H23ZM4 11V13H1V11H4Z" fill="currentColor"></path></svg>' id=theme-toggle><svg viewbox="0 0 24 24" height=24 width=24 xmlns=http://www.w3.org/2000/svg><path d="M10 7C10 10.866 13.134 14 17 14C18.9584 14 20.729 13.1957 21.9995 11.8995C22 11.933 22 11.9665 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C12.0335 2 12.067 2 12.1005 2.00049C10.8043 3.27098 10 5.04157 10 7ZM4 12C4 16.4183 7.58172 20 12 20C15.0583 20 17.7158 18.2839 19.062 15.7621C18.3945 15.9187 17.7035 16 17 16C12.0294 16 8 11.9706 8 7C8 6.29648 8.08133 5.60547 8.2379 4.938C5.71611 6.28423 4 8.9417 4 12Z" fill=currentColor></path></svg></button><button aria-label="table of content" id=toc-toggle><svg viewbox="0 0 24 24" height=24 width=24 xmlns=http://www.w3.org/2000/svg><path d="M3 4H21V6H3V4ZM3 11H15V13H3V11ZM3 18H21V20H3V18Z" fill=currentColor></path></svg></button></div></div></header><div id=wrapper><div id=blank></div><aside class=blur><nav><ul><li><a class=h2 href=#why-kubernetes-for-homelab>Why Kubernetes for Homelab?</a><li><a class=h2 href=#implementation-overview>Implementation Overview</a> <ul><li><a class=h3 href=#1-k3s-installation>1. k3s Installation</a><li><a class=h3 href=#2-setting-cloudflared-agent-on-server>2. setting cloudflared agent on server</a><li><a class=h3 href=#3-media-server-jellyfin>3. Media Server (Jellyfin)</a><li><a class=h3 href=#4-network-and-subdomain-mapping>4. Network and Subdomain Mapping</a><li><a class=h3 href=#4-monitoring-stack>4. Monitoring Stack</a></ul><li><a class=h2 href=#future-enhancements>Future Enhancements</a></ul></nav><button aria-label="back to top" id=back-to-top><svg viewbox="0 0 24 24" height=24 width=24 xmlns=http://www.w3.org/2000/svg><path d="M11.9997 10.8284L7.04996 15.7782L5.63574 14.364L11.9997 8L18.3637 14.364L16.9495 15.7782L11.9997 10.8284Z" fill=currentColor></path></svg></button></aside><main><div><div data-check-icon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z" fill="currentColor"></path></svg>' data-copy-icon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z" fill="currentColor"></path></svg>' id=copy-cfg style=display:none></div><article data-backlink-icon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path d="M9.41421 8L18.0208 16.6066L16.6066 18.0208L8 9.41421V17H6V6H17V8H9.41421Z" fill="currentColor"></path></svg>' class=prose><h1>Kubernetes HomeLab</h1><div id=post-info><div id=date><span id=publish>2024-06-20</span></div><div id=tags><a href=blog.pawanchhetri.com.np/tags/k8s><span>#</span>k8s</a><a href=blog.pawanchhetri.com.np/tags/docker-compose><span>#</span>docker-compose</a><a href=blog.pawanchhetri.com.np/tags/homelab><span>#</span>homelab</a><a href=blog.pawanchhetri.com.np/tags/self-hosted><span>#</span>self-hosted</a><a href=blog.pawanchhetri.com.np/tags/linux><span>#</span>linux</a></div></div><p>I’ve been using my old laptop as homelab server for a year or so. Previously I used docker-compose to deploy different services. For a single or multiple user docker-compose is definitely the best way to set up a homelab server. But if you have few number of users Kubernetes could be the optimal solution. In this blog I’ll be deploying a media server using k8s and also a monitoring solution and make it accessible from everywhere.<p><img alt src=/images/2024-07-09-18-19-18.png><h2 id=why-kubernetes-for-homelab>Why Kubernetes for Homelab?<a aria-label="Anchor link for: why-kubernetes-for-homelab" class=zola-anchor href=#why-kubernetes-for-homelab>#</a></h2><p>While Docker Compose works well for simple setups, Kubernetes offers:<ol><li><strong>Automatic Scaling</strong> - Handle multiple users efficiently<li><strong>Self-Healing</strong> - Automatic container replacement<li><strong>Resource Efficiency</strong> - k3s uses half the memory of standard K8s<li><strong>Enterprise Features</strong> - Namespaces, RBAC, and network policies</ol><h2 id=implementation-overview>Implementation Overview<a aria-label="Anchor link for: implementation-overview" class=zola-anchor href=#implementation-overview>#</a></h2><h3 id=1-k3s-installation>1. k3s Installation<a aria-label="Anchor link for: 1-k3s-installation" class=zola-anchor href=#1-k3s-installation>#</a></h3><h4 id=why-k3s-over-k8s>why k3s over k8s:<a aria-label="Anchor link for: why-k3s-over-k8s" class=zola-anchor href=#why-k3s-over-k8s>#</a></h4><ul><li>Single-binary installation (&LT100MB)<li>SQLite backend for lightweight operation<li>Automatic certificate management</ul><h4 id=installation-steps>Installation steps<a aria-label="Anchor link for: installation-steps" class=zola-anchor href=#installation-steps>#</a></h4><ul><li><a href=blog.pawanchhetri.com.np/blog/k8s-k3s-homelab/k3s>https://docs.k3s.io/</a></ul><pre style=color:#d8dee9;background-color:#2e3440><code><span>curl -sfL https://get.k3s.io | sh -       # only works on Linux Server/Desktop 
+</span></code></pre><h5 id=best-practices>Best practices:<a aria-label="Anchor link for: best-practices" class=zola-anchor href=#best-practices>#</a></h5><ul><li><p>copy the config of /etc/rancher/k3s/k3s.yaml to ~/.kube/config and ‘chmod 600 ~/.kube/config’</p><li><p>Put these commands in .bashrc file for persistence.</p></ul><pre style=color:#d8dee9;background-color:#2e3440><code><span>alias kubectl='sudo k3s kubectl'
+</span><span>export KUBECONFIG=/home/pawan/.kube/config
+</span></code></pre><h3 id=2-setting-cloudflared-agent-on-server>2. setting cloudflared agent on server<a aria-label="Anchor link for: 2-setting-cloudflared-agent-on-server" class=zola-anchor href=#2-setting-cloudflared-agent-on-server>#</a></h3><p>I’ve installed cloudflared docker agent:<ul><li>Cloudflare Tunnel setup through Docker, this runs as a daemon/background_service.</ul><p><img alt src=/images/2024-06-20-20-16-36.png> <br> <br> <img alt src=/images/2024-06-20-19-21-24.png>                 Tunnel is setup from cloudflare to the server.<h3 id=3-media-server-jellyfin>3. Media Server (Jellyfin)<a aria-label="Anchor link for: 3-media-server-jellyfin" class=zola-anchor href=#3-media-server-jellyfin>#</a></h3><p>I’m setting up <a rel="nofollow noreferrer" href=https://jellyfin.org/>jellyfin </a> to host my downloaded movies, tv_shows, music, books, audioBooks, podcasts. There is hostPaths mentioned below in the configuration file where our media stuffs are stored/downloaded which will be streamed. <br><h4 id=k8s-file-configuration>k8s file Configuration<a aria-label="Anchor link for: k8s-file-configuration" class=zola-anchor href=#k8s-file-configuration>#</a></h4><p>❯ cat jellyfin.yml<pre style=color:#d8dee9;background-color:#2e3440><code><span>#Namespace isolation
+</span><span>#Creating a jellyfin namespace 
+</span><span>
+</span><span>apiVersion: v1
+</span><span>kind: Namespace
+</span><span>metadata:
+</span><span>  name: jellyfin
+</span><span>
+</span><span>
+</span><span>
+</span><span>
+</span><span>---
+</span><span>#Creating a Deployment with resouce allocation
+</span><span>#transcoding can consume too much resources at times depending on media
+</span><span>
+</span><span>apiVersion: apps/v1
+</span><span>kind: Deployment
+</span><span>metadata:
+</span><span>  name: jellyfin
+</span><span>  namespace: jellyfin
+</span><span>  labels:
+</span><span>    app: jellyfin
+</span><span>spec:
+</span><span>  replicas: 1      # I'm the only user using it
+</span><span>  selector:
+</span><span>    matchLabels:
+</span><span>      app: jellyfin
+</span><span>  template:
+</span><span>    metadata:
+</span><span>      labels:
+</span><span>        app: jellyfin
+</span><span>    spec:
+</span><span>      containers:
+</span><span>      - name: jellyfin
+</span><span>        image: jellyfin/jellyfin
+</span><span>        ports:
+</span><span>        - containerPort: 8096
+</span><span>        resources:
+</span><span>          requests:
+</span><span>            memory: "512Mi"  # Requesting 512Mi of RAM
+</span><span>            cpu: "500m"      # Requesting 0.5 CPU core
+</span><span>          limits:
+</span><span>            memory: "2Gi"    # Limiting to 2Gi of RAM
+</span><span>            cpu: "2000m"     # Limiting to 2 CPU cores
+</span><span>        volumeMounts:
+</span><span>        - name: config-volume
+</span><span>          mountPath: /config
+</span><span>        - name: cache-volume
+</span><span>          mountPath: /cache
+</span><span>        - name: media1
+</span><span>          mountPath: /media1
+</span><span>        - name: media2
+</span><span>          mountPath: /media2
+</span><span>        - name: media3
+</span><span>          mountPath: /media3
+</span><span>        - name: media4
+</span><span>          mountPath: /media4
+</span><span>        - name: media5
+</span><span>          mountPath: /media5
+</span><span>        - name: media6
+</span><span>          mountPath: /media6
+</span><span>#HostPath volumes for media libraries, fixed directories where we store/download media
+</span><span>      volumes:
+</span><span>      - name: config-volume
+</span><span>        hostPath:
+</span><span>          path: /home/pawan/k8s_homelab/jellyfin/scratch/config
+</span><span>      - name: cache-volume
+</span><span>        hostPath:
+</span><span>          path: /home/pawan/k8s_homelab/jellyfin/scratch/cache
+</span><span>      - name: media1
+</span><span>        hostPath:
+</span><span>          path: /home/pawan/Storage/Movies/
+</span><span>      - name: media2
+</span><span>        hostPath:
+</span><span>          path: /home/pawan/Storage/tv_shows/
+</span><span>      - name: media3
+</span><span>        hostPath:
+</span><span>          path: /home/pawan/Storage/Books/
+</span><span>      - name: media4
+</span><span>        hostPath:
+</span><span>          path: /home/pawan/Storage/music/
+</span><span>      - name: media5
+</span><span>        hostPath:
+</span><span>          path: /home/pawan/Storage/AudioBooks/
+</span><span>      - name: media6
+</span><span>        hostPath:
+</span><span>          path: /home/pawan/Storage/podcast/
+</span><span>
+</span><span>
+</span><span>---
+</span><span># Exposing jellyfin through my local_ip:30096
+</span><span># NodePort service exposure
+</span><span>
+</span><span>apiVersion: v1
+</span><span>kind: Service
+</span><span>metadata:
+</span><span>  name: jellyfin
+</span><span>  namespace: jellyfin
+</span><span>  labels:
+</span><span>    app: jellyfin
+</span><span>spec:
+</span><span>  type: NodePort
+</span><span>  ports:
+</span><span>  - port: 8096
+</span><span>    targetPort: 8096
+</span><span>    nodePort: 30096  # This is optional; Kubernetes will automatically assign a port if you omit this line
+</span><span>    protocol: TCP
+</span><span>  selector:
+</span><span>    app: jellyfin
+</span></code></pre><br><p><img alt src=/images/2024-06-20-20-13-31.png>                 A instance/replica of jellyfin app is running successfully. <br> <br><h3 id=4-network-and-subdomain-mapping>4. Network and Subdomain Mapping<a aria-label="Anchor link for: 4-network-and-subdomain-mapping" class=zola-anchor href=#4-network-and-subdomain-mapping>#</a></h3><ul><li><p>Static IP assignment on host machine</p> <p>If not we have to change ip in cloudflare console everytime the server reboots.</p><li><p>DNS configuration for subdomains</p> <p>Using <a rel="nofollow noreferrer" href=https://developers.cloudflare.com/cloudflare-one/>cloudflare zero trust</a> to map subdomains of our choice to socket(ip:port) <br> <br></p></ul><p><img alt src=/images/2024-06-20-19-20-15.png>                 The socket exposed by k8s NodePort service is mapped. <br> <br><p><img alt src=/images/2024-06-20-20-33-40.png>                     mapping for different media set on jellyfin UI.</p><br><br><h3 id=4-monitoring-stack>4. Monitoring Stack<a aria-label="Anchor link for: 4-monitoring-stack" class=zola-anchor href=#4-monitoring-stack>#</a></h3><p>Monitoring the server and services is important because knowing what’s going on with the server and services without opening server console and terminal to type commands is always handy.<p>Using Helm-charts is the easiest way to set up Server and k8s application monitoring. I’m using the kube-prometheus-stack which allows:<ul><li>Prometheus for metrics collection<li>Grafana for dashboards visualization<li>Alertmanager configuration (If you want alerting based on the threshold set) <br></ul><p>Run the below commands to set it up.<pre style=color:#d8dee9;background-color:#2e3440><code><span>`https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack`
+</span><span>helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+</span><span>helm repo update
+</span><span>
+</span><span>helm install [RELEASE_NAME] prometheus-community/kube-prometheus-stack
+</span><span>helm install my-promethues-grafana  prometheus-community/kube-prometheus-stack
+</span><span>
+</span><span>helm show values prometheus-community/kube-prometheus-stack > values.yaml
+</span><span>helm upgrade my-promethues-grafana prometheus-community/kube-prometheus-stack -f values.yaml
+</span><span>
+</span><span>helm upgrade [RELEASE_NAME] prometheus-community/kube-prometheus-stack
+</span><span>
+</span><span>helm uninstall [RELEASE_NAME]
+</span></code></pre><br><p><img alt src=/images/2024-06-20-20-12-14.png>                 Grafana, prometheus pods are mapped with NodePort.</p><br><p>Tons of premade dashboards are present officially and unofficially, which are good enough for this sort of setup. Grab an Id from your dashboard of your choice and import it from <a rel="nofollow noreferrer" href=https://grafana.com/grafana/dashboards/>grafana_dashboards</a>.</p><br><p><img alt src=/images/2024-06-20-19-31-50.png><p>                            Node Exporter Full:ID 1860</p><br><br><h2 id=future-enhancements>Future Enhancements<a aria-label="Anchor link for: future-enhancements" class=zola-anchor href=#future-enhancements>#</a></h2><ol><li><strong>Cloudflare terrafrom</strong> - Domain/Subdomain configuration using terrafrom<li><strong>GitOps Workflow</strong> - ArgoCD implementation<li><strong>Storage Scaling</strong> - Using a NAS<li><strong>HA Configuration</strong> - Multi-node cluster<li><strong>Automated Backups</strong> - Velero integration</ol></article><div class=giscus></div><script async crossorigin data-category=General data-category-id=DIC_kwDOL6heGM4CfTnr data-emit-metadata=0 data-input-position=bottom data-lang=en data-loading=lazy data-mapping=pathname data-reactions-enabled=1 data-repo=Pawan-666/website_new_theme data-repo-id=R_kgDOL6heGA data-strict=0 data-theme=preferred_color_scheme src=https://giscus.app/client.js></script></div><footer><div class=copyright><p>© 2025 Pawan Chhetri</div></footer></main></div><script src=/js/lightense.min.js></script><script src=/js/main.js></script>
