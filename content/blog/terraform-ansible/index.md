@@ -13,18 +13,19 @@ toc = true
 comment = true
 +++
 
-
-
 &emsp; &emsp;In this blog post, we will explore how DevOps teams can leverage IAC tools to simplify their infrastructure management and deployment processes using terraform and then ansible one after other. 
 I'm going to make a server on AWS using Terraform and configure server, install necessary packages  using ansible for web page deployment which will display `Hello World!` on its port 80.
 
 ## Terraform
 
 ![](/images/2023-04-18-21-27-20.png)
+<br>
 &emsp; &emsp; __Terraform__ is an open-source tool for managing infrastructure resources as code, allowing developers to define and manage their infrastructure declaratively using a configuration file. It supports multiple cloud providers and on-premises infrastructure and provides a consistent and repeatable way to provision and manage resources. Prior to running the code and commands below you should have an aws account(free-tier works too), terraform and ansible installed. Make an IAM user and set [aws_cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) on your local machine to use that user's IAM credentials. AWS uses the concept of Identity Access Management(IAM) to manage resource allocation to different users/groups and this allows us to use different IAM setup for different projects. 
 
 
+
 `cat main.tf`    #make this file in any directory you want
+
 ```bash
 #making resources in Singapore
 provider "aws" {      
@@ -114,6 +115,9 @@ The `Name` supplied in the above `main.tf` matches with the configured server an
 
 `ssh ubuntu@54.255.87.157`  #ssh should work , which is the necessay condition to run the below ansible playbook
 
+
+----------
+
 ## Ansible
 
 &emsp; &emsp; __Ansible__ is an open-source automation tool that allows developers to automate the deployment and management of infrastructure resources. It uses YAML to define infrastructure as code and supports multiple operating systems and cloud providers. Ansible is agentless, making it easy to manage and scale infrastructure environments. Ansible uses a main file considered as playbook which contains instructions to run on remote servers.
@@ -189,4 +193,3 @@ Btw, our web server is up.
 If we refresh the aws console, it says that web server is terminated, which gets removed after a while.![](/images/2023-04-12-17-06-37.png)
 
 &emsp; &emsp;You can add more stuffs to both the terraform and ansible files above to do much more. 
-

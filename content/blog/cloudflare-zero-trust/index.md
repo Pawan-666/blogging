@@ -30,7 +30,7 @@ Homelab bookmarks tab, access all the self hosted services and more from this pa
 
 ![](/images/2023-10-07-08-07-50.png)
 
-```
+```yaml
 version: "3.3"
 services:
   homepage:
@@ -44,8 +44,10 @@ services:
     restart: unless-stopped
 
 ```
+
 `$ cat bookmarks.yaml`
-```
+
+```yaml
 ---
 
 - Monitoring:
@@ -107,7 +109,8 @@ services:
 For server and docker containers monitoring I've used Grafana. Helps to monitor the server CPU,Memory,Network status.
 ![](/images/2023-10-07-09-13-33.png)
 ![](/images/2023-10-07-09-12-52.png)
-```
+
+```yaml
 version: '3.3'
 services:
 ``    node-exporter:
@@ -147,7 +150,7 @@ services:
 
 `$ cat prometheus.yml`
 
-```
+```yaml
 global:
   scrape_interval: 5s
   external_labels:
@@ -176,7 +179,8 @@ scrape_configs:
 #### [Portainer](https://portainer.pawanchhetri.com.np)
 I prefer and use terminal to deploy containers but portainer does provide nice gui to deploy docker stuffs with nice visualizations, bells and whistles.
 ![](/images/2023-10-07-08-17-59.png)
-```
+
+```yaml
 version: "3.7"
 
 services:
@@ -201,7 +205,8 @@ services:
 Fantastic to monitor websites(up or not), latency and ssl cert expiry date, You can even share the status page with clients.
 
 ![](/images/2023-10-07-08-20-54.png)
-```
+
+```yaml
 version: '3'
 services:
   uptime-kuma:
@@ -222,7 +227,8 @@ Your netflix at home. Also has plugin for subtitle download.
 
 ![](/images/2023-10-07-08-24-30.png)
 ![](/images/2023-10-07-08-27-57.png)
-```
+
+```yaml
 version: '3.3'
 services:
     jellyfin:
@@ -243,7 +249,8 @@ services:
 This is a basic requirement to add movies and series to your jellyfin server. I don't use it and don't recommend it either !.
 
 ![](/images/2023-10-07-09-17-25.png)
-```
+
+```yaml
 ---
 version: "2.1"
 services:
@@ -274,7 +281,8 @@ services:
 Nice music player, especially great for those who prefer listening music with full albums like I do. It has android clients too.
 
 ![](/images/2023-10-07-08-29-53.png)
-```
+
+```yaml
 version: "3"
 services:
   navidrome:
@@ -302,7 +310,7 @@ Same as the music player above but for audiobooks and podcasts.
 
 ![](/images/2023-10-07-09-57-01.png)
 
-```
+```yaml
 version: "3.7"
 services:
   audiobookshelf:
@@ -324,7 +332,7 @@ services:
 An online book reader. I don't like reading softcopy books tho. Ctrl+c/v code snippets from technical books is useful at times and it helps to have a softcopy even if you have a hardcopy for this purpose only.
 ![](/images/2023-10-07-08-39-05.png)
 
-```
+```yaml
 version: '3.9'
 services:
     kavita:
