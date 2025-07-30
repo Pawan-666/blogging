@@ -1,0 +1,57 @@
+[[project]]
+name = "eks and vpc terraform modules"
+desc = "eks and vpc terraform modules from scratch"
+tags = ["k8s", "eks", "aws", "vpc"]
+links = [
+    {name = "github", url = "https://github.com/Pawan-666/eks_tf"},
+]
+
+[[project]]
+name = "Gitops"
+desc = "Gitops using jenkins, eks, argocd"
+tags = ["gitops", "k8s", "jenkins", "eks"]
+links = [
+    {name = "github1", url = "https://github.com/Pawan-666/gitops-1"},
+    {name = "github2", url = "https://github.com/Pawan-666/git-ops2"},
+]
+
+[[project]]
+name = "helm setup"
+desc = "working with helm_charts from scratch"
+tags = ["k8s", "eks"]
+links = [
+    {name = "github", url = "https://github.com/Pawan-666/k8s_maintainence_page"},
+]
+
+[[project]]
+name = "k8s_maintainence_page"
+desc = "k8s_maintainence_page when outages and certain service become unavailable"
+tags = ["k8s", "eks"]
+links = [
+    {name = "github", url = "https://github.com/Pawan-666/k8s_maintainence_page"},
+]
+
+[[project]]
+name = "macos dotfiles"
+desc = "dotfiles for macos | keyboard and terminal centric workflow"
+tags = ["macos", "aerospace", "neovim", "mpv", "yazi", "alacritty", "ghostty", "tmux", "zsh"]
+links = [
+    {name = "github", url = "https://github.com/Pawan-666/m3_dotfiles"},
+]
+
+[[project]]
+name = "desktop wallpapers"
+desc = "desktop wallpapers and images"
+tags = ["images"]
+links = [
+    {name = "github", url = "https://github.com/Pawan-666/wall"},
+]
+
+[[project]]
+name = "linux dotfiles"
+desc = "dotfiles for linux desktop"
+tags = ["linux", "vim", "bspwm", "i3", "lvim", "tmux", "mpv", "lf", "alacritty"]
+links = [
+    {name = "github", url = "https://github.com/Pawan-666/linux_dotfiles"},
+]
+
