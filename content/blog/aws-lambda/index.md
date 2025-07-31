@@ -13,14 +13,17 @@ toc = true
 comment = true
 +++
 
+# How AWS Lambda Works (Behind the Scenes) ?
 
-## ⚙️ How AWS Lambda Works (Behind the Scenes)
+**AWS Lambda** is a serverless compute service provided by Amazon Web Services (AWS) that lets you run code without provisioning or managing servers.
+. It auto-scales, handles failures, and only charges when your code runs.
 
-**AWS Lambda** lets you run code without managing servers — it auto-scales, handles failures, and only charges when your code runs.
+[![](/images/2025-07-31-19-07-45.png)](https://docs.aws.amazon.com/lambda/) 
+
 
 ###  Under the Hood
 
-* **Firecracker MicroVMs** power Lambda — these are super lightweight virtual machines that start fast and keep your code secure.
+* **Firecracker MicroVMs** power Lambda : these are super lightweight virtual machines that start fast and keep your code secure.
 * Lambda reuses environments when possible to avoid cold starts and improve speed.
 
 ###  How It’s Triggered
@@ -44,7 +47,7 @@ comment = true
 * Use **CloudWatch** for logs and basic monitoring.
 
 
-## ✅ Best Use Cases for AWS Lambda
+## Best Use Cases for AWS Lambda
 
 * **File Processing**: Run code when files are uploaded to **S3** (e.g., image resize).
 * **API Backend**: Power lightweight APIs with **API Gateway + Lambda**.
@@ -54,7 +57,7 @@ comment = true
 * **Webhooks & Bots**: Handle webhooks or power chatbots (e.g., Slack, Telegram).
 
 
-## 💰 Lambda Pricing (2025)
+## Lambda Pricing (2025)
 
 * **Free Tier**: 1M requests + 400,000 GB-seconds/month
 * **Requests**: \$0.20 per million (after free tier)
@@ -69,7 +72,7 @@ Ready to see it in action? Let’s move on to the demo 👇
 
 ---
 
-# 🛠️ Demo: Build a Notification Pipeline with AWS Lambda
+# Demo: Build a Notification Pipeline with AWS Lambda
 
 In this demo, we create a simple **serverless notification system** using:
 
