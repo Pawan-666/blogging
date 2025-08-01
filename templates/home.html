@@ -48,17 +48,9 @@
 
 {% block content %}
 <div id="wrapper">
+  <!-- Matrix-style digital rain canvas -->
+  <canvas id="matrix-rain" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.1;"></canvas>
   <main>
-    <section id="info">
-      <img src="{{ config.extra.avatar }}" alt="avatar">
-      <div id="text">
-        <div>
-          <span id="blog_name" style="font-size:125%;font-weight:bold">{{ config.extra.blog_name }}</span>
-          <hr>
-          <span id="bio">{{ config.extra.bio }}</span>
-        </div>
-      </div>
-    </section>
     <section id="links">
       <div id="left">
         {% for section in config.extra.sections %}
@@ -66,19 +58,6 @@
         {% endfor %}
       </div>
       <div id="right">
-        {% set rss_icon = load_data(path="static/icon/rss.svg") %}
-        {% if section.generate_feed -%}
-        <a href="{{ blog_section_path }}/{{ config.feed_filename }}" aria-label="rss feed">{{ rss_icon | safe }}</a>
-        {% elif config.generate_feed -%}
-        <a href="/{{ config.feed_filename }}" aria-label="rss feed">{{ rss_icon | safe }}</a>
-        {% endif %}
-        {% for link in config.extra.links -%}
-        <a href="{{ link.url }}" aria-label="{{ link.name }}" target="_blank" rel='noreferrer noopener'>
-          {% set icon_path = "static/icon/" ~ link.icon ~ ".svg" %}
-          {% set icon = load_data(path=icon_path) %}
-          {{ icon | safe }}
-        </a>
-        {% endfor %}
         {% set moon_icon = load_data(path="static/icon/moon.svg") %}
         {% set sun_icon = load_data(path="static/icon/sun.svg") %}
         <button id="theme-toggle" aria-label="theme switch" data-moon-icon="{{ moon_icon }}" data-sun-icon="{{ sun_icon }}">
@@ -86,11 +65,55 @@
         </button>
       </div>
     </section>
-    {% if config.extra.homepage_layout == 'about' %}
-      <section id="brief" class="prose">
-        {{ section.content | trim | safe }}
-      </section>
-    {% elif config.extra.homepage_layout == 'list' %}
+    <section id="info">
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <span class="terminal-button close"></span>
+          <span class="terminal-button minimize"></span>
+          <span class="terminal-button maximize"></span>
+          <span class="terminal-title">pawan@localhost:~$</span>
+        </div>
+        <div class="terminal-content">
+          <div class="terminal-line" data-delay="0.3">
+            <span class="prompt">pawan@localhost:~$</span>
+            <span class="command typing-text" data-text="cat about.txt"></span>
+          </div>
+          <div class="output" data-delay="1.1">{{ config.extra.bio }}</div>
+          <div class="terminal-line" data-delay="2.5">
+            <span class="prompt">pawan@localhost:~$</span>
+            <span class="command typing-text" data-text="cat README.md"></span>
+          </div>
+          <div class="output" data-delay="3.8">
+            {% if config.extra.homepage_layout == 'about' and section.content %}
+            {{ section.content | trim | safe }}
+            {% else %}
+            Hello there!
+
+I'm a DevOps and Site Reliability Engineer (SRE) with experience in designing, implementing, testing and monitoring infrastructure and applications.
+            {% endif %}
+          </div>
+          <div class="terminal-line" data-delay="5.0">
+            <span class="prompt">pawan@localhost:~$</span>
+            <span class="cursor">_</span>
+          </div>
+        </div>
+      </div>
+      <div class="avatar-container">
+        <img src="{{ config.extra.avatar }}" alt="avatar" class="terminal-avatar">
+        
+        <!-- Social media icons below avatar -->
+        <div class="social-icons">
+          {% for link in config.extra.links -%}
+          <a href="{{ link.url }}" aria-label="{{ link.name }}" target="_blank" rel='noreferrer noopener'>
+            {% set icon_path = "static/icon/" ~ link.icon ~ ".svg" %}
+            {% set icon = load_data(path=icon_path) %}
+            {{ icon | safe }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    {% if config.extra.homepage_layout == 'list' %}
       {% set blog_section_path = config.extra.blog_section_path | trim_start_matches(pat="/") %}
       {% set section_md_path = blog_section_path ~ "/_index.md" %}
       {% set blog_section = get_section(path=section_md_path) %}
@@ -133,4 +156,127 @@
   mermaid.initialize({ startOnLoad: true });
 </script>
 {% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Typing animation for terminal commands
+  function typeText(element, text, speed = 50) {
+    let i = 0;
+    element.textContent = '';
+    
+          function typeChar() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(typeChar, speed + Math.random() * 10); // Reduced randomness for faster, more consistent typing
+        }
+      }
+    typeChar();
+  }
+
+  // Initialize typing animations
+  const typingElements = document.querySelectorAll('.typing-text');
+  typingElements.forEach(element => {
+    const text = element.getAttribute('data-text');
+    const delay = parseFloat(element.closest('[data-delay]').getAttribute('data-delay')) * 1000;
+    
+    setTimeout(() => {
+      typeText(element, text, 30);
+    }, delay);
+  });
+
+  // Enhanced glow effect on hover for terminal window
+  const terminalWindow = document.querySelector('.terminal-window');
+  if (terminalWindow) {
+    terminalWindow.addEventListener('mouseenter', function() {
+      this.style.filter = 'brightness(1.1) contrast(1.05)';
+    });
+    
+    terminalWindow.addEventListener('mouseleave', function() {
+      this.style.filter = 'brightness(1) contrast(1)';
+    });
+  }
+
+  // Add subtle parallax effect to background
+  document.addEventListener('mousemove', function(e) {
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+    
+    const avatar = document.querySelector('.terminal-avatar');
+    if (avatar) {
+      avatar.style.transform = `translate(${x * 5}px, ${y * 5}px)`;
+    }
+  });
+
+  // Enhanced social icon interactions
+  const socialIcons = document.querySelectorAll('.social-icons a');
+  socialIcons.forEach(icon => {
+    icon.addEventListener('mouseenter', function() {
+      this.style.filter = 'brightness(1.2) saturate(1.3)';
+    });
+    
+    icon.addEventListener('mouseleave', function() {
+      this.style.filter = 'brightness(1) saturate(1)';
+    });
+  });
+
+  // Matrix rain effect
+  const canvas = document.getElementById('matrix-rain');
+  const ctx = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+  const matrixArray = matrix.split("");
+  
+  const fontSize = 10;
+  const columns = canvas.width / fontSize;
+  const drops = [];
+  
+  for(let x = 0; x < columns; x++) {
+    drops[x] = Math.random() * canvas.height;
+  }
+  
+  function drawMatrix() {
+    ctx.fillStyle = 'rgba(32, 33, 36, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = '#39ff14';
+    ctx.font = fontSize + 'px monospace';
+    
+    for(let i = 0; i < drops.length; i++) {
+      const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      
+      if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+  
+  // Only run matrix effect in dark mode
+  function startMatrix() {
+    if (document.body.classList.contains('dark')) {
+      setInterval(drawMatrix, 35);
+    }
+  }
+  
+  startMatrix();
+  
+  // Restart matrix when theme changes
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      setTimeout(startMatrix, 100);
+    });
+  }
+});
+</script>
 {% endblock script %}

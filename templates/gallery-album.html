@@ -1,0 +1,121 @@
+{% extends "_base.html" %}
+
+{% block page %}gallery-album{% endblock page%}
+{% block lang %}{% if page.extra.lang %}{{ page.extra.lang }}{% else %}{{ page.lang }}{% endif %}{% endblock lang %}
+{% block title %}{{ page.title }}{% endblock title %}
+{% block desc %}
+  <meta name="description" content="{{ page.description }}">
+{% endblock desc %}
+
+{% block content %}
+{% include "_header.html" %}
+<div id="wrapper">
+  <div id="blank"></div>
+  <main class="layout-album">
+    <header class="album-header">
+      {% if page.description %}
+      <p class="album-description">{{ page.description }}</p>
+      {% endif %}
+    </header>
+    
+    {% if page.content %}
+    <div class="album-content">
+      {{ page.content | safe }}
+    </div>
+    {% endif %}
+    
+    {% if page.extra.images %}
+    <div class="image-gallery">
+      {% for image in page.extra.images %}
+      <figure class="gallery-item">
+        <a href="{{ page.permalink }}{{ image.src }}" class="gallery-link" data-lightbox="album">
+          <img src="{{ page.permalink }}{{ image.src }}" alt="{{ image.alt }}" loading="lazy">
+        </a>
+        {% if image.caption %}
+        <figcaption>{{ image.caption }}</figcaption>
+        {% endif %}
+      </figure>
+      {% endfor %}
+    </div>
+    {% endif %}
+    
+    <nav class="album-nav">
+      <a href="/gallery/" class="back-link">← Back to Gallery</a>
+    </nav>
+  </main>
+  {% include "_footer.html" %}
+</div>
+
+<!-- Simple lightbox functionality -->
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <img class="lightbox-content">
+  <div class="lightbox-nav">
+    <button class="lightbox-prev">❮</button>
+    <button class="lightbox-next">❯</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('.lightbox-content');
+  const lightboxClose = lightbox.querySelector('.lightbox-close');
+  const lightboxPrev = lightbox.querySelector('.lightbox-prev');
+  const lightboxNext = lightbox.querySelector('.lightbox-next');
+  const galleryLinks = document.querySelectorAll('.gallery-link');
+  
+  let currentImageIndex = 0;
+  let images = Array.from(galleryLinks).map(link => link.href);
+  
+  function openLightbox(index) {
+    currentImageIndex = index;
+    lightboxImg.src = images[currentImageIndex];
+    lightbox.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeLightbox() {
+    lightbox.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+  
+  function showNext() {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    lightboxImg.src = images[currentImageIndex];
+  }
+  
+  function showPrev() {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    lightboxImg.src = images[currentImageIndex];
+  }
+  
+  // Event listeners
+  galleryLinks.forEach((link, index) => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      openLightbox(index);
+    });
+  });
+  
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxNext.addEventListener('click', showNext);
+  lightboxPrev.addEventListener('click', showPrev);
+  
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (lightbox.style.display === 'block') {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    }
+  });
+});
+</script>
+{% endblock content %}

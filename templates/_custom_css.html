@@ -1,6 +1,6 @@
 <style>
 
-  /* light mode colors */
+  /* Standard light mode colors */
   body {
     --primary-color: #376dd9;
     --primary-pale-color: #698bcf1c;
@@ -18,7 +18,7 @@
     --callout-tip-color: #35a06b;
   }
 
-  /* dark mode colors */
+  /* Standard dark mode colors */
   body.dark {
     --primary-color: #689afd;
     --primary-pale-color: #93acdd1c;
@@ -36,7 +36,41 @@
     --callout-tip-color: #3ea06f;
   }
 
-  /* typography */
+  /* Terminal styling for homepage - green theme (light mode) */
+  body.homepage {
+    /* Darker green colors for light mode readability */
+    --primary-color: #2d7d2d;           /* Forest green - readable on white */
+    --primary-pale-color: #2d7d2d20;   /* Pale forest green */
+    --inline-code-color: #1a5c1a;      /* Dark forest green */
+    
+    /* Terminal-style accent colors in darker green for light mode */
+    --terminal-cyan: #2d7d2d;
+    --terminal-yellow: #2d7d2d;
+    --terminal-red: #2d7d2d;
+    --terminal-blue: #2d7d2d;
+    --terminal-purple: #2d7d2d;
+  }
+
+  body.homepage.dark {
+    /* Enhanced green theme for dark mode */
+    --primary-color: #39ff14;           /* Neon green */
+    --primary-pale-color: #39ff1420;   /* Pale neon green */
+    --inline-code-color: #7cfc00;      /* Bright lime green */
+    
+    /* Terminal accent colors for dark mode */
+    --terminal-cyan: #39ff14;
+    --terminal-yellow: #39ff14;
+    --terminal-red: #39ff14;
+    --terminal-blue: #39ff14;
+    --terminal-purple: #39ff14;
+    
+    /* Enhanced visual effects */
+    --glow-color: #39ff14;
+    --glow-shadow: 0 0 20px #39ff14, 0 0 40px #39ff1440, 0 0 60px #39ff1420;
+    --text-glow: 0 0 10px #39ff14, 0 0 20px #39ff1460, 0 0 30px #39ff1430;
+  }
+
+  /* Standard typography */
   body {
     --main-font: "IBMPlexSans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --code-font: "IBMPlexMono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -48,6 +82,17 @@
     --aside-font-size: 16px;
     --img-border-radius: 4px;
     --inline-code-border-radius: 2px;
+  }
+
+  /* Terminal typography - ONLY for homepage */
+  body.homepage {
+    --main-font: "IBMPlexMono", "Fira Code", "Source Code Pro", "Consolas", "Monaco", "Courier New", monospace;
+    --paragraph-line-height: 1.4em;
+    --img-border-radius: 2px;
+    
+    font-family: var(--main-font);
+    background: var(--bg-color);
+    color: var(--text-color);
   }
 
 </style>

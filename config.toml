@@ -1,4 +1,4 @@
-base_url = "https://pawanchhetri.com.np"  # NOT ending with a slash!base_url = "pawanchhetri.com.np"
+base_url = "https://pawanchhetri.com.np"  # NOT ending with a slash!
 title = "Pawan"
 description = "Devops and SRE stuffs"
 default_language = "en"
@@ -6,8 +6,8 @@ output_dir = "public"
 compile_sass = true
 minify_html = true
 build_search_index = false  # Keep this false, search is temporarily unsupported
-# generate_feeds = true
-# feed_filenames = ["feed.xml"]
+generate_feeds = true
+feed_filenames = ["feed.xml"]
 taxonomies = [
     { name = "tags" },
     { name = "categories" },
@@ -36,7 +36,7 @@ anchors = "on"
 
 [extra]
 
-blog_name = "Pawan"
+blog_name = "Home"
 author = "Pawan Chhetri"
 bio = "Programmer, Tinkerer, Engineer| Vibes from desk to cloud"
 avatar = "img/avatar.webp"
@@ -53,8 +53,10 @@ homepage_layout = "about"             # "about" | "list"
 
 sections = [
     { name = "blog", path = "/blog", is_external = false },
-    # { name = "talks", path = "/talks", is_external = false },
+    { name = "snippets", path = "/snippets", is_external = false },
+    { name = "gallery", path = "/gallery", is_external = false },
     { name = "projects", path = "/projects", is_external = false },
+    # { name = "talks", path = "/talks", is_external = false },
 ]
 blog_section_path = "/blog"
 

@@ -1,0 +1,56 @@
+{% extends "_base.html" %}
+
+{% block page %}gallery{% endblock page%}
+{% block lang %}{% if section.extra.lang %}{{ section.extra.lang }}{% else %}{{ section.lang }}{% endif %}{% endblock lang %}
+{% block title %}{{ section.title }}{% endblock title %}
+{% block desc %}
+  <meta name="description" content="{{ section.description }}">
+{% endblock desc %}
+
+{% block content %}
+{% include "_header.html" %}
+<div id="wrapper">
+  <div id="blank"></div>
+  <main class="layout-gallery">
+    {% if section.content %}
+    <div class="gallery-intro">
+      {{ section.content | safe }}
+    </div>
+    {% endif %}
+    
+    <div class="gallery-grid">
+      {% for album in section.pages %}
+      <article class="gallery-album-card">
+        <a href="{{ album.permalink }}" class="album-link">
+          {% if album.extra.cover_image %}
+          <div class="album-cover">
+            <img src="{{ album.permalink }}{{ album.extra.cover_image }}" alt="{{ album.title }}" loading="lazy">
+            <div class="album-overlay">
+              <h3 class="album-title">{{ album.title }}</h3>
+              {% if album.extra.images %}
+              <span class="album-count">{{ album.extra.images | length }} photos</span>
+              {% endif %}
+            </div>
+          </div>
+          {% else %}
+          <div class="album-placeholder">
+            <h3 class="album-title">{{ album.title }}</h3>
+            {% if album.extra.images %}
+            <span class="album-count">{{ album.extra.images | length }} photos</span>
+            {% endif %}
+          </div>
+          {% endif %}
+          
+          {% if album.description %}
+          <p class="album-description">{{ album.description }}</p>
+          {% endif %}
+          
+          <time class="album-date">{{ album.date | date }}</time>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </main>
+  {% include "_footer.html" %}
+</div>
+{% endblock content %}

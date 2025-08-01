@@ -1,0 +1,611 @@
+{% extends "_base.html" %}
+
+{% block page %}snippets{% endblock page%}
+{% block lang %}{% if section.extra.lang %}{{ section.extra.lang }}{% else %}{{ section.lang }}{% endif %}{% endblock lang %}
+{% block title %}{{ section.title }}{% endblock title %}
+{% block desc %}
+  <meta name="description" content="{{ section.description }}">
+{% endblock desc %}
+
+{% block content %}
+{% include "_header.html" %}
+<div id="wrapper">
+  <main class="layout-snippets">
+    <div class="snippets-container">
+      {% for snippet in section.pages %}
+      <article class="snippet-card" id="snippet-{{ loop.index }}">
+        <div class="snippet-header">
+          <div class="snippet-meta">
+            <span class="snippet-date">{{ snippet.date | date(format="%b %d, %Y") }}</span>
+            {% if snippet.updated and snippet.updated != snippet.date %}
+            <span class="snippet-updated">• Updated {{ snippet.updated | date(format="%b %d") }}</span>
+            {% endif %}
+          </div>
+          {% if snippet.taxonomies.tags is defined %}
+          <div class="snippet-tags">
+            {% for tag in snippet.taxonomies.tags -%}
+            {% set tag_slugify = tag | slugify -%}
+            <a href="{{ config.base_url ~ '/tags/' ~ tag_slugify }}" class="snippet-tag">#{{ tag }}</a>
+            {%- endfor %}
+          </div>
+          {% endif %}
+        </div>
+        
+        <div class="snippet-content">
+          {% if snippet.title != "untitled" %}
+          <h3 class="snippet-title"><a href="{{ snippet.permalink }}">{{ snippet.title }}</a></h3>
+          {% endif %}
+          
+          <div class="snippet-body">
+            {% if snippet.summary %}
+              {{ snippet.summary | safe }}
+              {% if snippet.content | length > snippet.summary | length %}
+              <div class="snippet-read-more">
+                <a href="{{ snippet.permalink }}">Read more →</a>
+              </div>
+              {% endif %}
+            {% else %}
+              {{ snippet.content | safe }}
+            {% endif %}
+          </div>
+        </div>
+        
+        <div class="snippet-footer">
+          <a href="{{ snippet.permalink }}" class="snippet-permalink">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </main>
+  <div class="snippets-backdrop" id="snippets-backdrop"></div>
+  <aside {% if config.extra.blur_effect %} class="blur" {% endif %}>
+    <div class="snippets-search">
+      <input type="text" id="snippets-search-input" placeholder="Search snippets..." autocomplete="off">
+      <div class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        {% for snippet in section.pages %}
+        <li>
+          <a class="snippet-nav-link" href="#snippet-{{ loop.index }}" data-snippet-id="snippet-{{ loop.index }}" data-snippet-title="{{ snippet.title | lower }}">{{ snippet.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </aside>
+  {% include "_footer.html" %}
+</div>
+
+<style>
+/* Snippets page structure - consistent with blog page */
+body.snippets {
+  #wrapper {
+    margin: 0 auto;
+    max-width: var(--main-max-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  main {
+    margin: 60px 0;
+    padding: 0 15px;
+  }
+}
+
+.layout-snippets {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.snippets-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.snippets-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.snippets-container::-webkit-scrollbar-track {
+  background: var(--primary-pale-color);
+  border-radius: 4px;
+}
+
+.snippets-container::-webkit-scrollbar-thumb {
+  background: var(--text-pale-color);
+  border-radius: 4px;
+  border: 1px solid var(--primary-pale-color);
+}
+
+.snippets-container::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+.snippet-card {
+  background: var(--bg-color);
+  border: 1px solid var(--primary-pale-color);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.snippet-card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.snippet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.snippet-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-pale-color);
+}
+
+.snippet-date {
+  font-weight: 500;
+}
+
+.snippet-updated {
+  opacity: 0.8;
+}
+
+.snippet-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.snippet-tag {
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  padding: 0.125rem 0.375rem;
+  background: var(--primary-pale-color);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.snippet-tag:hover {
+  background: var(--primary-color);
+  color: var(--bg-color);
+}
+
+.snippet-content {
+  margin-bottom: 1rem;
+}
+
+.snippet-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.snippet-title a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+body.dark .snippet-title a {
+  color: #ffffff;
+}
+
+.snippet-title a:hover {
+  color: var(--primary-color);
+}
+
+.snippet-body {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.snippet-body p {
+  margin: 0 0 0.75rem 0;
+}
+
+.snippet-body p:last-child {
+  margin-bottom: 0;
+}
+
+.snippet-body pre {
+  background: var(--primary-pale-color);
+  padding: 0.75rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  margin: 0.75rem 0;
+}
+
+.snippet-body code {
+  background: var(--primary-pale-color);
+  padding: 0.125rem 0.25rem;
+  border-radius: 3px;
+  font-size: 0.875rem;
+}
+
+.snippet-body pre code {
+  background: none;
+  padding: 0;
+}
+
+.snippet-read-more {
+  margin-top: 0.75rem;
+}
+
+.snippet-read-more a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.snippet-read-more a:hover {
+  text-decoration: underline;
+}
+
+.snippet-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--primary-pale-color);
+}
+
+.snippet-permalink {
+  color: var(--text-pale-color);
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.snippet-permalink:hover {
+  opacity: 1;
+  color: var(--primary-color);
+}
+
+/* Sidebar styles */
+aside {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  padding: 4rem 1rem 1rem 1rem;
+  overflow-y: auto;
+  z-index: 10;
+  background: #ffffff;
+  border-left: 1px solid var(--primary-pale-color);
+}
+
+body.dark aside {
+  background: var(--bg-color);
+}
+
+/* Search bar styles */
+.snippets-search {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.snippets-search input {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+  border: 1px solid var(--primary-pale-color);
+  border-radius: 6px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.snippets-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(55, 109, 217, 0.1);
+}
+
+body.dark .snippets-search input:focus {
+  box-shadow: 0 0 0 2px rgba(104, 154, 253, 0.2);
+}
+
+.snippets-search input::placeholder {
+  color: var(--text-pale-color);
+}
+
+.search-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-pale-color);
+  pointer-events: none;
+}
+
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  aside.blur {
+    background-color: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-left: 1px solid rgba(0, 123, 255, 0.2);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    aside.blur {
+      background-color: rgba(22, 22, 24, 0.85);
+      border-left: 1px solid rgba(109, 155, 255, 0.2);
+    }
+  }
+}
+
+aside nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+aside nav li {
+  margin-bottom: 0.5rem;
+  transition: opacity 0.2s ease;
+}
+
+aside nav .snippet-nav-link {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  border-right: 3px solid transparent;
+  font-weight: 500;
+}
+
+
+
+aside nav .snippet-nav-link:hover:not(.active) {
+  background: var(--primary-pale-color);
+  color: #ffffff;
+  border-right-color: var(--primary-color);
+}
+
+
+
+aside nav .snippet-nav-link.active {
+  background: var(--primary-color);
+  color: #ffffff;
+  border-right-color: var(--primary-color);
+  font-weight: 500;
+}
+
+aside nav .snippet-nav-link.active:hover {
+  background: var(--primary-color);
+  color: #ffffff;
+}
+
+@media (min-width: 1200px) {
+  body.snippets main {
+    margin-right: 300px;
+  }
+}
+
+@media (max-width: 1199px) {
+  aside {
+    transform: translateX(100%);
+    transition: transform 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease;
+    z-index: 999;
+    background: #ffffff;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  body.dark aside {
+    background: var(--bg-color);
+  }
+  
+  aside.show-mobile {
+    transform: translateX(0);
+  }
+
+  @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    aside.blur {
+      background-color: rgba(255, 255, 255, 0.75);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+      aside.blur {
+        background-color: rgba(22, 22, 24, 0.75);
+      }
+    }
+  }
+}
+
+
+
+/* Mobile backdrop overlay */
+.snippets-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.snippets-backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  body.snippets main {
+    margin: 60px 0;
+    padding: 0 10px;
+  }
+  
+  .snippet-card {
+    padding: 1rem;
+  }
+  
+  .snippet-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const snippetLinks = document.querySelectorAll('.snippet-nav-link');
+  const snippetCards = document.querySelectorAll('.snippet-card');
+  let isScrollingFromClick = false;
+
+
+  
+  // Smooth scrolling for sidebar links
+  snippetLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        // Set flag to prevent scroll listener from interfering
+        isScrollingFromClick = true;
+        
+        // Remove active class from all links
+        snippetLinks.forEach(l => l.classList.remove('active'));
+        // Add active class to clicked link
+        this.classList.add('active');
+        
+        // Smooth scroll to target
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        
+        // Reset flag after scroll animation completes
+        setTimeout(() => {
+          isScrollingFromClick = false;
+        }, 1000);
+      }
+    });
+  });
+  
+  // Highlight current snippet in sidebar on scroll (only if not from click)
+  function updateActiveLink() {
+    if (isScrollingFromClick) return; // Don't update if scrolling from click
+    
+    let current = '';
+    snippetCards.forEach(card => {
+      const cardTop = card.offsetTop;
+      const cardHeight = card.offsetHeight;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (scrollTop >= cardTop - 100 && scrollTop < cardTop + cardHeight - 100) {
+        current = card.getAttribute('id');
+      }
+    });
+    
+    if (current) {
+      snippetLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    }
+  }
+  
+  // Set initial active link
+  if (snippetLinks.length > 0) {
+    snippetLinks[0].classList.add('active');
+  }
+  
+  // Update active link on scroll with throttling
+  let scrollTimeout;
+  function throttledUpdateActiveLink() {
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(() => {
+      updateActiveLink();
+      scrollTimeout = null;
+    }, 50);
+  }
+  
+  window.addEventListener('scroll', throttledUpdateActiveLink);
+  
+  // Update active link on snippets container scroll
+  const snippetsContainer = document.querySelector('.snippets-container');
+  if (snippetsContainer) {
+    snippetsContainer.addEventListener('scroll', throttledUpdateActiveLink);
+  }
+
+  // Search functionality
+  const searchInput = document.getElementById('snippets-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase().trim();
+      
+      snippetLinks.forEach(link => {
+        const snippetTitle = link.getAttribute('data-snippet-title');
+        const listItem = link.parentElement;
+        
+        if (searchTerm === '' || snippetTitle.includes(searchTerm)) {
+          listItem.style.display = '';
+          link.style.opacity = '1';
+        } else {
+          listItem.style.display = 'none';
+          link.style.opacity = '0.3';
+        }
+      });
+      
+      // If no search term, restore normal opacity
+      if (searchTerm === '') {
+        snippetLinks.forEach(link => {
+          link.style.opacity = '';
+        });
+      }
+    });
+  }
+});
+</script>
+{% endblock script %}

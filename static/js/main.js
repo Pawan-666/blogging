@@ -130,6 +130,71 @@ function addBackToTopBtn() {
   toggle();
 }
 
+function enableSnippetsNavToggle() {
+  const snippetsToggle = document.querySelector('#snippets-nav-toggle');
+  if (!snippetsToggle) return;
+  
+  const sidebar = document.querySelector('aside');
+  const backdrop = document.querySelector('#snippets-backdrop');
+  if (!sidebar) return;
+
+  function toggleSidebar(show) {
+    if (show) {
+      snippetsToggle.classList.add('active');
+      sidebar.classList.add('show-mobile');
+      if (backdrop) backdrop.classList.add('show');
+      if (window.innerWidth <= 1199) {
+        document.body.style.overflow = 'hidden';
+      }
+    } else {
+      snippetsToggle.classList.remove('active');
+      sidebar.classList.remove('show-mobile');
+      if (backdrop) backdrop.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+  }
+
+  snippetsToggle.addEventListener('click', () => {
+    const isOpen = sidebar.classList.contains('show-mobile');
+    toggleSidebar(!isOpen);
+  });
+
+  // Close sidebar when clicking on snippet links on small screens
+  const snippetLinks = document.querySelectorAll('.snippet-nav-link');
+  snippetLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 1199) {
+        toggleSidebar(false);
+      }
+    });
+  });
+
+  // Close sidebar when clicking backdrop
+  if (backdrop) {
+    backdrop.addEventListener('click', () => {
+      toggleSidebar(false);
+    });
+  }
+
+  // Close sidebar when clicking outside on small screens
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 1199 && 
+        sidebar.classList.contains('show-mobile') && 
+        !sidebar.contains(e.target) && 
+        !snippetsToggle.contains(e.target) &&
+        (!backdrop || !backdrop.contains(e.target))) {
+      toggleSidebar(false);
+    }
+  });
+
+  // Handle window resize - reset sidebar state on large screens
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1200) {
+      toggleSidebar(false);
+    }
+  });
+}
+
 function addFootnoteBacklink() {
   const backlinkIcon = document.querySelector('.prose').dataset.backlinkIcon;
   const footnotes = document.querySelectorAll('.footnote-definition');
@@ -153,6 +218,7 @@ function enableImgLightense() {
 
 enableThemeToggle();
 enableNavFold();
+enableSnippetsNavToggle();
 if (document.body.classList.contains('post')) {
   enableOutdateAlert();
   enableTocToggle();
