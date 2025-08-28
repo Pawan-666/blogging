@@ -1,5 +1,5 @@
 +++
-title = "K8s commands"
+title = "Kubernetes CLI Cheat Sheet"
 date = 2025-03-14
 draft = false
 
@@ -12,18 +12,16 @@ toc = false
 comment = false
 +++
 
-#  Kubernetes CLI Cheat Sheet
 
-### Context & Namespace
+ Context & Namespace
 
 ```bash
 k config get-contexts                       # List all contexts
 k config current-context                    # Show current context
 ```
 
----
 
-### Pods
+ Pods
 
 ```bash
 k exec -it pod_name -c container_name -n namespace -- bash   # Exec into a container shell
@@ -34,17 +32,15 @@ k top po pod_name --containers -n namespace                   # Show CPU & memor
 k delete po pod_name -n namespace                             # Delete pod
 ```
 
----
 
-### Deployments
+ Deployments
 
 ```bash
 k rollout restart deploy deploy_name -n namespace   # Restart a deployment
 ```
 
----
 
-### HPA & Events
+ HPA & Events
 
 ```bash
 k describe hpa hpa_name -n namespace                # Describe HPA details
