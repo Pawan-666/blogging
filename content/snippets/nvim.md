@@ -1,4 +1,4 @@
-++
++++
 title = "nvim commands"
 date = 2025-08-28
 draft = false
