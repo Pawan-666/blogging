@@ -40,14 +40,12 @@
         {% set blog_section_path = config.extra.blog_section_path %}
       {% endif %}
 
-      {% if blog_section_path is defined and section and section.path %}
-        {% if section.path is starting_with(blog_section_path) %}
-          {% set rss_icon = load_data(path="static/icon/rss.svg") %}
-          {% if section.generate_feeds -%}
+      {% if blog_section_path is defined %}
+        {% set rss_icon = load_data(path="static/icon/rss.svg") %}
+        {% if current_path and current_path is starting_with(blog_section_path) %}
           <a href="{{ blog_section_path }}/{{ config.feed_filenames.0 }}" aria-label="rss feed">{{ rss_icon | safe }}</a>
-          {% elif config.generate_feeds -%}
+        {% elif config.generate_feeds -%}
           <a href="/{{ config.feed_filenames.0 }}" aria-label="rss feed">{{ rss_icon | safe }}</a>
-          {% endif %}
         {% endif %}
       {% endif %}
 
