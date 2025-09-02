@@ -32,6 +32,12 @@ k top po pod_name --containers -n namespace                   # Show CPU & memor
 k delete po pod_name -n namespace                             # Delete pod
 ```
 
+Secrets
+
+```bash
+kubectl get secret datadog-agent -n namespace -o jsonpath='{.data.api-key}' | base64 -d
+```
+
 
  Deployments
 

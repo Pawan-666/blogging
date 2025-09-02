@@ -12,7 +12,14 @@ toc = false
 comment = false
 +++
 
-Quick commands to clean up Docker system resources:
+get in
+
+```bash
+docker exec -it container_name sh
+ ```
+
+
+clean up Docker system resources:
 
 ```bash
 # Remove all stopped containers
