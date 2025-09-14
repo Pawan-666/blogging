@@ -5,7 +5,7 @@ date = 2023-04-01
 draft = false
 
 [taxonomies]
-tags = ["zola", "self-hosting"]
+tags = ["zola", "self-hosted"]
 categories = ["General"]
 
 [extra]

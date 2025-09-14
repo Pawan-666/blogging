@@ -5,7 +5,7 @@ date = 2024-06-20
 draft = false
 
 [taxonomies]
-tags = ["k8s", "docker-compose", "homelab", "self-hosted", "linux"]
+tags = ["k8s", "homelab", "self-hosted", "linux"]
 categories = ["Homelab"]
 
 [extra]
