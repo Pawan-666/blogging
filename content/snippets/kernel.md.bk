@@ -1,0 +1,20 @@
++++
+title = "kernel"
+date = 2025-09-14
+draft = false
+
+[taxonomies]
+tags = ["kernel", "linux"]
+categories = ["snippets"]
+
+[extra]
+toc = false
+comment = false
++++
+
+list all parameters
+
+```bash
+sysctl -a
+```
+

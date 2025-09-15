@@ -1,0 +1,19 @@
++++
+title = "firewall"
+date = 2025-09-14
+draft = false
+
+[taxonomies]
+tags = ["firewall", "linux"]
+categories = ["snippets"]
+
+[extra]
+toc = false
+comment = false
++++
+
+current iptables rules
+
+```bash
+iptables -vnL
+```
