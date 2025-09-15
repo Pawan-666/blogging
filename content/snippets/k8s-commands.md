@@ -1,5 +1,5 @@
 +++
-title = "Kubernetes CLI Cheat Sheet"
+title = "k8s Cheat Sheet"
 date = 2025-03-14
 draft = false
 

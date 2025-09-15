@@ -1,5 +1,5 @@
 +++
-title = "Grep commands"
+title = "Grep"
 date = 2025-09-14
 draft = false
 

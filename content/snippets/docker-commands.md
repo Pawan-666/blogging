@@ -1,5 +1,5 @@
 +++
-title = "Docker System Cleanup"
+title = "Docker Cleanup"
 date = 2025-01-15
 draft = false
 

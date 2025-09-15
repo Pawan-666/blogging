@@ -1,5 +1,5 @@
 +++
-title = "SSH Config Pro Tip"
+title = "SSH"
 date = 2025-02-13
 draft = false
 
@@ -39,4 +39,4 @@ Host frontend-github
     IdentitiesOnly yes
 ```
 
-git clone git@frontend-github:repo_link.git  # replace github.com with frontend-github after key is added.
+`git clone git@frontend-github:repo_link.git  # replace github.com with frontend-github after key is added.`
