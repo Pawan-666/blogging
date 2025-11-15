@@ -13,13 +13,19 @@ comment = false
 +++
 
 
- Context & Namespace
+ Contexts
 
 ```bash
 k config get-contexts                       # List all contexts
 k config current-context                    # Show current context
 ```
 
+ Auth
+
+```bash
+k auth whoami
+k auth can-i get pods -as [new_user/group/sa]      # rback testing
+```
 
  Pods
 
@@ -51,4 +57,10 @@ k rollout restart deploy deploy_name -n namespace   # Restart a deployment
 ```bash
 k describe hpa hpa_name -n namespace                # Describe HPA details
 k get ev --field-selector involvedObject.name=obj_name -n namespace   # Get events for specific object
+```
+
+ Extras
+
+```bash
+k get pods -A --no-headers | wc -l        # no headers row
 ```
