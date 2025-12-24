@@ -5,11 +5,11 @@ date = 2025-07-15
 images = [
     { src = "dam1.jpg", alt = "Example image 1" },
     { src = "dam2.jpg", alt = "Example image 1" },
-    { src = "dam3.jpg", alt = "Example image 1" },
+    # { src = "dam3.jpg", alt = "Example image 1" },
     { src = "dam4.jpg", alt = "Example image 1" },
     { src = "dam5.jpg", alt = "Example image 1" },
     { src = "dam6.jpg", alt = "Example image 1" },
-    { src = "dam8.jpg", alt = "Example image 1" },
+    # { src = "dam8.jpg", alt = "Example image 1" },
     { src = "dam9.jpg", alt = "Example image 1" },
     { src = "dam10.jpg", alt = "Example image 1" },
 ]

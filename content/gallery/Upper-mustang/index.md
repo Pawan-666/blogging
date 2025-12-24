@@ -7,7 +7,7 @@ images = [
     { src = "up2.jpg", alt = "Example image 1" },
     { src = "up3.jpg", alt = "Example image 1" },
     { src = "up4.jpg", alt = "Example image 1" },
-    { src = "up5.jpg", alt = "Example image 1" },
+    # { src = "up5.jpg", alt = "Example image 1" },
     { src = "up6.jpg", alt = "Example image 1" },
     { src = "up7.jpg", alt = "Example image 1" },
     { src = "up8.jpg", alt = "Example image 1" },

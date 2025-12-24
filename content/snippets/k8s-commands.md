@@ -63,4 +63,5 @@ k get ev --field-selector involvedObject.name=obj_name -n namespace   # Get even
 
 ```bash
 k get pods -A --no-headers | wc -l        # no headers row
+watch "kubectl get pods -A | grep something "    # live watch
 ```
