@@ -51,27 +51,20 @@
   <!-- Matrix-style digital rain canvas -->
   <canvas id="matrix-rain" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.1;"></canvas>
   <main>
-    <section id="links">
-      <div id="left">
-        {% for section in config.extra.sections %}
-        <a href="{{ section.path }}" {% if section.is_external %}target="_blank" rel='noreferrer noopener'{% endif %}>{{ section.name }}</a>
-        {% endfor %}
-      </div>
-      <div id="right">
-        {% set moon_icon = load_data(path="static/icon/moon.svg") %}
-        {% set sun_icon = load_data(path="static/icon/sun.svg") %}
-        <button id="theme-toggle" aria-label="theme switch" data-moon-icon="{{ moon_icon }}" data-sun-icon="{{ sun_icon }}">
-          {{ moon_icon | safe }}
-        </button>
-      </div>
-    </section>
     <section id="info">
       <div class="terminal-window">
         <div class="terminal-header">
           <span class="terminal-title">pawan@localhost:~$</span>
-          <span class="terminal-button close"></span>
-          <span class="terminal-button minimize"></span>
-          <span class="terminal-button maximize"></span>
+          <div class="terminal-nav">
+            {% for section in config.extra.sections %}
+            <a href="{{ section.path }}" class="terminal-nav-link" {% if section.is_external %}target="_blank" rel='noreferrer noopener'{% endif %}>{{ section.name }}</a>
+            {% endfor %}
+          </div>
+          {% set moon_icon = load_data(path="static/icon/moon.svg") %}
+          {% set sun_icon = load_data(path="static/icon/sun.svg") %}
+          <button id="theme-toggle" class="terminal-theme-toggle" aria-label="theme switch" data-moon-icon="{{ moon_icon }}" data-sun-icon="{{ sun_icon }}">
+            {{ moon_icon | safe }}
+          </button>
         </div>
         <div class="terminal-content">
           <div class="terminal-line anim-delay-1">
