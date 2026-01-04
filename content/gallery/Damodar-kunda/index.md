@@ -13,7 +13,7 @@ images = [
     { src = "dam9.jpg", alt = "Example image 1" },
     { src = "dam10.jpg", alt = "Example image 1" },
 ]
-cover_image = "dam3.jpg"
+cover_image = "dam9.jpg"
 +++
 
 2 days of intense walking. It took ~12 hours to reach and ~10hours to return.
