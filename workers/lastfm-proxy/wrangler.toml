@@ -1,0 +1,7 @@
+name = "lastfm-proxy"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# After deploying, add secrets via:
+# wrangler secret put LASTFM_USER
+# wrangler secret put LASTFM_API_KEY

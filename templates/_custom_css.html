@@ -95,4 +95,146 @@
     color: var(--text-color);
   }
 
+  /* ========== LAST.FM MUSIC WIDGET ========== */
+
+  /* Album art */
+  .album-art {
+    width: 70px !important;
+    height: 70px !important;
+    min-width: 70px;
+    max-width: 70px;
+    min-height: 70px;
+    max-height: 70px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+    border-radius: 0 !important;
+    display: none;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .album-art:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--primary-pale-color);
+  }
+
+  body.dark .album-art {
+    box-shadow: 0 0 10px var(--primary-pale-color);
+  }
+
+  /* Music container */
+  .music-container {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+  }
+
+  .music-info {
+    flex: 1;
+  }
+
+  .music-output {
+    margin-bottom: 1em;
+    font-size: 0.9em;
+    line-height: 1.6;
+  }
+
+  .music-output .info-label {
+    color: var(--text-pale-color);
+    font-weight: 500;
+    opacity: 0.8;
+  }
+
+  .music-output .info-sep {
+    color: var(--text-pale-color);
+    opacity: 0.5;
+  }
+
+  .music-output .info-value {
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+
+  /* Now playing link */
+  #now-playing-track a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  #now-playing-track a:hover {
+    text-decoration: underline;
+  }
+
+  body.dark #now-playing-track a {
+    text-shadow: 0 0 8px var(--primary-color);
+  }
+
+  /* ========== INLINE SOCIAL LINKS ========== */
+
+  .social-icons-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    padding: 8px 0;
+  }
+
+  .social-icons-inline a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.25s ease;
+    font-size: 0.9em;
+  }
+
+  .social-icons-inline a:hover {
+    color: var(--primary-color);
+  }
+
+  body.dark .social-icons-inline a:hover {
+    text-shadow: 0 0 8px var(--primary-color);
+  }
+
+  .social-icons-inline a svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .social-icons-inline .link-name {
+    color: var(--primary-color);
+  }
+
+  /* Simplified prompt */
+  .prompt {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+  body.dark .prompt {
+    text-shadow: 0 0 6px var(--primary-color);
+  }
+
+  /* Terminal animation - hide elements initially */
+  .terminal-content .terminal-line,
+  .terminal-content .output {
+    opacity: 0;
+    animation: fadeIn 0.2s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* Animation delays - prompt then output sequence */
+  .anim-delay-1 { animation-delay: 0.2s !important; }   /* whoami prompt */
+  .anim-delay-2 { animation-delay: 1.0s !important; }   /* whoami output */
+  .anim-delay-3 { animation-delay: 1.8s !important; }   /* music prompt */
+  .anim-delay-4 { animation-delay: 2.6s !important; }   /* music output */
+  .anim-delay-5 { animation-delay: 3.2s !important; }   /* links prompt */
+  .anim-delay-6 { animation-delay: 4.0s !important; }   /* links output */
+  .anim-delay-7 { animation-delay: 4.6s !important; }   /* final cursor */
+
 </style>

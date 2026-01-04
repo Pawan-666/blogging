@@ -1,0 +1,34 @@
+# Using find + sed (most portable)
+find /path/to/dir -type f -exec sed -i 's/old_text/new_text/g' {} +
+
+# Using find with specific file extensions
+find /path/to/dir -type f -name "*.txt" -exec sed -i 's/old_text/new_text/g' {} +
+
+# Using grep to find files first (faster for large directories)
+grep -rl 'old_text' /path/to/dir | xargs sed -i 's/old_text/new_text/g'
+
+
+
+find . -type f -exec sed -i 's|us-east-1|us-west-2|g' {} +
+
+# macOS - with no backup (empty string)
+find . -type f -exec sed -i '' 's/us-east-1/us-west-2/g' {} +
+
+# macOS - with .bak backup files
+find . -type f -exec sed -i '.bak' 's/us-east-1/us-west-2/g' {} +
+
+ find . -type f -name "*.bak" -delete
+
+
+
+find . -type f -exec sed -i '.bak' 's/my-project/dev-test/g' {} +
+
+dev-test
+
+
+
+
+
+
+
+aws acm describe-certificate --certificate-arn arn:aws:acm:us-west-2:212265152584:certificate/1d16b96d-ca33-4f79-807f-819c6a324efd --query 'Certificate.Status'

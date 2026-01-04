@@ -74,42 +74,59 @@
           <span class="terminal-title">pawan@localhost:~$</span>
         </div>
         <div class="terminal-content">
-          <div class="terminal-line" data-delay="0.3">
-            <span class="prompt">pawan@localhost:~$</span>
-            <span class="command typing-text" data-text="cat about.txt"></span>
+          <div class="terminal-line anim-delay-1">
+            <span class="prompt">&gt;</span>
+            <span class="command typing-text" data-text="whoami" data-delay="0.2"></span>
           </div>
-          <div class="output" data-delay="1.1">{{ config.extra.bio }}</div>
-          <div class="terminal-line" data-delay="2.5">
-            <span class="prompt">pawan@localhost:~$</span>
-            <span class="command typing-text" data-text="cat README.md"></span>
-          </div>
-          <div class="output" data-delay="3.8">
+          <div class="output anim-delay-2">
+            {{ config.extra.bio }}
             {% if config.extra.homepage_layout == 'about' and section.content %}
-            {{ section.content | trim | safe }}
+            <br><br>{{ section.content | trim | safe }}
             {% else %}
-            Hello there!
-
-I'm a DevOps and Site Reliability Engineer (SRE) with experience in designing, implementing, testing and monitoring infrastructure and applications.
+            <br><br>Hello there! I'm a DevOps and Site Reliability Engineer (SRE) with experience in designing, implementing, testing and monitoring infrastructure and applications.
             {% endif %}
           </div>
-          <div class="terminal-line" data-delay="5.0">
-            <span class="prompt">pawan@localhost:~$</span>
+          <!-- music command -->
+          <div class="terminal-line anim-delay-3">
+            <span class="prompt">&gt;</span>
+            <span class="command typing-text" data-text="music" data-delay="1.8"></span>
+          </div>
+          <div class="output music-output anim-delay-4">
+            <div class="music-container">
+              <img id="album-art" src="" alt="Album Art" class="album-art">
+              <div class="music-info">
+                <span class="info-label">Now</span><span class="info-sep">:</span> <span class="info-value" id="now-playing-track">Loading...</span><br>
+                <span class="info-label">Artist</span><span class="info-sep">:</span> <span class="info-value" id="now-playing-artist">...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- links command -->
+          <div class="terminal-line anim-delay-5">
+            <span class="prompt">&gt;</span>
+            <span class="command typing-text" data-text="links" data-delay="3.2"></span>
+          </div>
+          <div class="output links-output anim-delay-6">
+            <div class="social-icons-inline">
+              {% for link in config.extra.links -%}
+              <a href="{{ link.url }}" aria-label="{{ link.name }}" target="_blank" rel='noreferrer noopener'>
+                {% set icon_path = "static/icon/" ~ link.icon ~ ".svg" %}
+                {% set icon = load_data(path=icon_path) %}
+                {{ icon | safe }}
+                <span class="link-name">{{ link.name }}</span>
+              </a>
+              {% endfor %}
+              <a href="/atom.xml" aria-label="RSS" target="_blank" rel='noreferrer noopener'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+                <span class="link-name">RSS</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="terminal-line anim-delay-7">
+            <span class="prompt">&gt;</span>
             <span class="cursor">_</span>
           </div>
-        </div>
-      </div>
-      <div class="avatar-container">
-        <img src="{{ config.extra.avatar }}" alt="avatar" class="terminal-avatar">
-        
-        <!-- Social media icons below avatar -->
-        <div class="social-icons">
-          {% for link in config.extra.links -%}
-          <a href="{{ link.url }}" aria-label="{{ link.name }}" target="_blank" rel='noreferrer noopener'>
-            {% set icon_path = "static/icon/" ~ link.icon ~ ".svg" %}
-            {% set icon = load_data(path=icon_path) %}
-            {{ icon | safe }}
-          </a>
-          {% endfor %}
         </div>
       </div>
     </section>
@@ -150,6 +167,58 @@ I'm a DevOps and Site Reliability Engineer (SRE) with experience in designing, i
 
 {% block script %}
 <script src="/js/lightense.min.js"></script>
+
+<!-- Last.fm Widget Script -->
+<script>
+const WORKER_URL = 'https://lastfm-proxy.pawanchhetri666.workers.dev/';
+const LASTFM_USER = 'pawanxyjazz';
+
+async function fetchNowPlaying() {
+  try {
+    const response = await fetch(WORKER_URL);
+    const data = await response.json();
+    const track = data.recenttracks.track[0];
+
+    const isPlaying = track['@attr']?.nowplaying === 'true';
+    const artist = track.artist['#text'];
+    const name = track.name;
+    const url = track.url;
+    const image = track.image[2]?.['#text'] || track.image[1]?.['#text'];
+
+    // Update album art
+    const albumArt = document.getElementById('album-art');
+    if (albumArt && image) {
+      albumArt.src = image;
+      albumArt.alt = `${artist} - ${name}`;
+      albumArt.style.display = 'block';
+    }
+
+    // Update track info
+    const trackEl = document.getElementById('now-playing-track');
+    const artistEl = document.getElementById('now-playing-artist');
+
+    if (trackEl) {
+      const prefix = isPlaying ? '▶ ' : '⏸ ';
+      trackEl.innerHTML = `<a href="${url}" target="_blank" rel="noopener">${prefix}${name}</a>`;
+    }
+    if (artistEl) {
+      artistEl.textContent = artist;
+    }
+  } catch (error) {
+    const albumArt = document.getElementById('album-art');
+    const trackEl = document.getElementById('now-playing-track');
+    const artistEl = document.getElementById('now-playing-artist');
+
+    if (albumArt) albumArt.style.display = 'none';
+    if (trackEl) trackEl.textContent = 'offline';
+    if (artistEl) artistEl.textContent = '...';
+  }
+}
+
+fetchNowPlaying();
+setInterval(fetchNowPlaying, 30000);
+</script>
+
 {% if section.extra.mermaid %}
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -178,8 +247,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const typingElements = document.querySelectorAll('.typing-text');
   typingElements.forEach(element => {
     const text = element.getAttribute('data-text');
-    const delay = parseFloat(element.closest('[data-delay]').getAttribute('data-delay')) * 1000;
-    
+    const delay = parseFloat(element.getAttribute('data-delay')) * 1000;
+
     setTimeout(() => {
       typeText(element, text, 30);
     }, delay);
