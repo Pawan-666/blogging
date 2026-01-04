@@ -72,12 +72,7 @@
             <span class="command typing-text" data-text="whoami" data-delay="0.2"></span>
           </div>
           <div class="output anim-delay-2">
-            {{ config.extra.bio }}
-            {% if config.extra.homepage_layout == 'about' and section.content %}
-            <br><br>{{ section.content | trim | safe }}
-            {% else %}
-            <br><br>Hello there! I'm a DevOps and Site Reliability Engineer (SRE) with experience in designing, implementing, testing and monitoring infrastructure and applications.
-            {% endif %}
+            {{ section.content | trim | safe }}
           </div>
           <!-- music command -->
           <div class="terminal-line anim-delay-3">

@@ -5,6 +5,4 @@ template = 'home.html'
 lang = 'en'
 +++
 
-### Hello there! 
-
-I'm a DevOps and Site Reliability Engineer (SRE) with experience in designing, implementing, testing and monitoring  infrastructure and applications.
+Cloud, DevSecOps & Site Reliability Engineer. I design, build, secure, and keep systems running from code to production.
