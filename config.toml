@@ -45,7 +45,8 @@ links = [
     { name = "GitHub", icon = "github", url = "https://github.com/Pawan-666" },
     { name = "Twitter", icon = "twitter", url = "https://twitter.com/PawanCh09197754" },
     { name = "LinkedIn", icon = "linkedin", url = "https://www.linkedin.com/in/pawan-chhetri-a91821169/" },
-    { name = "Youtube", icon = "youtube", url = "https://www.youtube.com/@pawanchhetri5708" }
+    { name = "YouTube", icon = "youtube", url = "https://www.youtube.com/@pawanchhetri5708" },
+    { name = "Last.fm", icon = "music", url = "https://www.last.fm/user/pawanxyjazz" }
     # { name = "Buy me a coffee", icon = "buymeacoffee", url = "https://www.buymeacoffee.com/prrao87" }
 ]
 

@@ -84,7 +84,8 @@
               <img id="album-art" src="" alt="Album Art" class="album-art">
               <div class="music-info">
                 <span class="info-label">Now</span><span class="info-sep">:</span> <span class="info-value" id="now-playing-track">Loading...</span><br>
-                <span class="info-label">Artist</span><span class="info-sep">:</span> <span class="info-value" id="now-playing-artist">...</span>
+                <span class="info-label">Artist</span><span class="info-sep">:</span> <span class="info-value" id="now-playing-artist">...</span><br>
+                <span class="info-label">Album</span><span class="info-sep">:</span> <span class="info-value" id="now-playing-album">...</span>
               </div>
             </div>
           </div>
@@ -170,6 +171,7 @@ async function fetchNowPlaying() {
     const isPlaying = track['@attr']?.nowplaying === 'true';
     const artist = track.artist['#text'];
     const name = track.name;
+    const album = track.album['#text']; // Extract album name
     const url = track.url;
     const image = track.image[2]?.['#text'] || track.image[1]?.['#text'];
 
@@ -184,6 +186,7 @@ async function fetchNowPlaying() {
     // Update track info
     const trackEl = document.getElementById('now-playing-track');
     const artistEl = document.getElementById('now-playing-artist');
+    const albumEl = document.getElementById('now-playing-album'); // Get album element
 
     if (trackEl) {
       const prefix = isPlaying ? '▶ ' : '⏸ ';
@@ -191,6 +194,9 @@ async function fetchNowPlaying() {
     }
     if (artistEl) {
       artistEl.textContent = artist;
+    }
+    if (albumEl) { // Update album element
+      albumEl.textContent = album;
     }
   } catch (error) {
     const albumArt = document.getElementById('album-art');
@@ -220,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function typeText(element, text, speed = 50) {
     let i = 0;
     element.textContent = '';
-    
+
           function typeChar() {
         if (i < text.length) {
           element.textContent += text.charAt(i);
@@ -248,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
     terminalWindow.addEventListener('mouseenter', function() {
       this.style.filter = 'brightness(1.1) contrast(1.05)';
     });
-    
+
     terminalWindow.addEventListener('mouseleave', function() {
       this.style.filter = 'brightness(1) contrast(1)';
     });
@@ -258,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('mousemove', function(e) {
     const x = e.clientX / window.innerWidth;
     const y = e.clientY / window.innerHeight;
-    
+
     const avatar = document.querySelector('.terminal-avatar');
     if (avatar) {
       avatar.style.transform = `translate(${x * 5}px, ${y * 5}px)`;
@@ -271,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
     icon.addEventListener('mouseenter', function() {
       this.style.filter = 'brightness(1.2) saturate(1.3)';
     });
-    
+
     icon.addEventListener('mouseleave', function() {
       this.style.filter = 'brightness(1) saturate(1)';
     });
@@ -285,48 +291,48 @@ document.addEventListener('DOMContentLoaded', function() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
-  
+
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
   const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
   const matrixArray = matrix.split("");
-  
+
   const fontSize = 10;
   const columns = canvas.width / fontSize;
   const drops = [];
-  
+
   for(let x = 0; x < columns; x++) {
     drops[x] = Math.random() * canvas.height;
   }
-  
+
   function drawMatrix() {
     ctx.fillStyle = 'rgba(32, 33, 36, 0.05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     ctx.fillStyle = '#39ff14';
     ctx.font = fontSize + 'px monospace';
-    
+
     for(let i = 0; i < drops.length; i++) {
       const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
       ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-      
+
       if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
         drops[i] = 0;
       }
       drops[i]++;
     }
   }
-  
+
   // Only run matrix effect in dark mode
   function startMatrix() {
     if (document.body.classList.contains('dark')) {
       setInterval(drawMatrix, 35);
     }
   }
-  
+
   startMatrix();
-  
+
   // Restart matrix when theme changes
   const themeToggle = document.getElementById('theme-toggle');
   if (themeToggle) {

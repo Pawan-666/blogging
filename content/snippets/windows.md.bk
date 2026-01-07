@@ -1,0 +1,2 @@
+Test-NetConnection 44.232.122.240 -Port 3389
+

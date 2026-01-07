@@ -31,4 +31,3 @@ dev-test
 
 
 
-aws acm describe-certificate --certificate-arn arn:aws:acm:us-west-2:212265152584:certificate/1d16b96d-ca33-4f79-807f-819c6a324efd --query 'Certificate.Status'
