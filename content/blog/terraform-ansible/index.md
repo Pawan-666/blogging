@@ -1,7 +1,7 @@
 +++
 title = "Terraform & Ansible"
 description = "terraform and ansible, one after other"
-date = 2023-04-12
+date = 2025-04-12
 draft = false
 
 [taxonomies]
