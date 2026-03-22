@@ -16,4 +16,4 @@ images = [
 cover_image = "dam9.jpg"
 +++
 
-2 days of intense walking. It took ~12 hours to reach and ~10hours to return.
+2 days of intense walking(yara/ghara -> damodar kunda). It took ~12 hours to reach and ~10hours to return.

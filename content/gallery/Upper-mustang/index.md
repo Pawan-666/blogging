@@ -20,5 +20,5 @@ images = [
 cover_image = "up2.jpg"
 +++
 
-Some snaps i took around upper mustang road(complete off road full of stones/gravel). Had to stop constantly to take these photos. 
+Some snaps i took around upper mustang road.
 
