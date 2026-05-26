@@ -24,7 +24,8 @@ k config current-context                    # Show current context
 
 ```bash
 k auth whoami
-k auth can-i get pods -as [new_user/group/sa]      # rback testing
+k auth can-i "*" " *"      #  all resources(admin)
+k auth can-i get pods     # as [new_user/group/sa]  # rback testing
 ```
 
  Pods

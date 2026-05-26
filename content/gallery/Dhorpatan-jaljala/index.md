@@ -20,5 +20,3 @@ images = [
 cover_image = "d2.jpg"
 +++
 
-Some snaps we took around dhorpatan and jaljala
-
