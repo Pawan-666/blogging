@@ -3,14 +3,14 @@ title = "Kedarnath-Tunganath-Badrinath"
 date = 2026-05-15
 [extra]
 images = [
-    { src = "K1.jpg", alt = "Example image 1" },
-    { src = "K2.jpg", alt = "Example image 1" },
-    { src = "K3.jpg", alt = "Example image 1" },
-    { src = "K4.jpg", alt = "Example image 1" },
-    { src = "K5.jpg", alt = "Example image 1" },
-    { src = "K6.jpg", alt = "Example image 1" },
-    { src = "K7.jpg", alt = "Example image 1" },
-    { src = "K8.jpg", alt = "Example image 1" },
+    { src = "k1.jpg", alt = "Example image 1" },
+    { src = "k2.jpg", alt = "Example image 1" },
+    { src = "k3.jpg", alt = "Example image 1" },
+    { src = "k4.jpg", alt = "Example image 1" },
+    { src = "k5.jpg", alt = "Example image 1" },
+    { src = "k6.jpg", alt = "Example image 1" },
+    { src = "k7.jpg", alt = "Example image 1" },
+    { src = "k8.jpg", alt = "Example image 1" },
     { src = "k10.jpg", alt = "Example image 1" },
     { src = "k11.jpg", alt = "Example image 1" },
     { src = "k12.jpg", alt = "Example image 1" },
